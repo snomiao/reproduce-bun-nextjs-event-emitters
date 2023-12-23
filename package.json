@@ -1,0 +1,19 @@
+{
+  "name": "main",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "next"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.45",
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "next": "^14.0.4",
+    "react": "^18.2.0"
+  }
+}

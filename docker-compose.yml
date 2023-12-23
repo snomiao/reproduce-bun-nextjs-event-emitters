@@ -1,0 +1,31 @@
+networks:
+  reproduce-network:
+services:
+  reproduce-bun-nextjs-event-emitters:
+    # reproduce image and commands
+    image: oven/bun
+    command: bun dev -H 0.0.0.0 -p 80
+
+    # replace with this, u will got expected result
+    # image: node
+    # command: npx next -H 0.0.0.0 -p 80
+
+    # network settings
+    working_dir: /src
+    volumes:
+      - ./:/src
+    networks: [reproduce-network]
+  reproduce-curl:
+    networks: [reproduce-network]
+    image: quay.io/curl/curl-base
+    depends_on:
+      - reproduce-bun-nextjs-event-emitters
+    command: curl -d=expected-data http://reproduce-bun-nextjs-event-emitters:80
+    restart: unless-stopped
+    #
+    # this happen with # bun@1.0.19, next@14.0.4
+    #
+    # expected stdout: got-post-data: expected-data
+    # but...
+    # actual   stdout: got-post-data: [object EventEmitter]
+    #
